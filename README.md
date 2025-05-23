@@ -1,125 +1,120 @@
-OLL Business Bootcamp Frontend
 
-This is the React + TypeScript frontend for the OLL Business Bootcamp Platform, built for students, mentors, and admins to interact with the learning, sales, and mentoring ecosystem. It features role-based routing, reusable UI components, and scalable architecture for business bootcamp management.
+# OLL Business Bootcamp Frontend
 
-🔧 Tech Stack
-React – Frontend framework
+A **React + TypeScript** web application for students, mentors, and admins to manage learning, mentoring, and sales workflows for the OLL Business Bootcamp.
 
-TypeScript – Type safety & better DX
+---
 
-Vite – Fast build tool
+## 🚀 Tech Stack
 
-Tailwind CSS – Utility-first styling
+- **React** – UI library  
+- **TypeScript** – Static typing  
+- **Vite** – Lightning‑fast build tool  
+- **Tailwind CSS** – Utility‑first styling  
+- **shadcn/ui** – Accessible component library  
+- **Lucide React** – Icon set  
+- **React Router DOM** – Client‑side routing  
+- **TanStack Query** – Data fetching & caching  
 
-shadcn/ui – Component library for consistent UI
+---
 
-Lucide React – Icon library
+## 📁 Project Structure
 
-React Router DOM – Role-based routing
+```text
+src/
+├─ components/
+│  ├─ ui/           # shadcn/ui primitives
+│  └─ ui-custom/    # domain‑specific UI
+├─ hooks/           # custom React hooks
+├─ lib/             # helpers & utilities
+├─ pages/           # routed pages (grouped by role)
+│  ├─ student/
+│  ├─ mentor/
+│  └─ admin/
+└─ App.tsx          # top‑level routing & providers
+```
 
-TanStack Query – Data fetching & server state management
+---
 
-📁 Project Structure
-bash
-Copy
-Edit
-/src
-├── components          # Reusable components
-│   ├── ui              # shadcn/ui components
-│   └── ui-custom       # App-specific custom UI
-├── hooks               # Custom React hooks
-├── lib                 # Utility functions & helpers
-├── pages               # Page components grouped by user role
-│   ├── student/
-│   ├── mentor/
-│   └── admin/
-├── App.tsx             # Main routing with role-based routes
-🔐 Role-Based Routing
-Each user role has a dedicated route structure:
+## 🔐 Role‑Based Routes
 
-Student – Tasks, Sales, Sessions, Leaderboard, Feedback
+| Role    | Core Pages                                                          |
+|---------|---------------------------------------------------------------------|
+| Student | Dashboard · Tasks · Sessions · Sales · Leaderboard · Profile · Help |
+| Mentor  | Dashboard · Batches · Sessions · Earnings · Leaderboard · Profile   |
+| Admin   | Dashboard · Batches · Students · Teachers · Earnings · Feedback     |
 
-Mentor – Batch Management, Earnings, Sessions
+Routing is declared in **`App.tsx`** and guards access with the user’s role.
 
-Admin – Program Management, Revenue, User Management
+---
 
-Routing is handled in App.tsx.
+## 🧩 Key Components
 
-🚀 Key Features
-Public Pages
-Landing Page – Hero section, testimonials, CTA
+- **MainLayout** – Authenticated page shell (sidebar + outlet)  
+- **Sidebar** – Collapsible navigation, role‑aware  
+- **UserAvatar**, **ProgressCard**, **TaskCard** – Custom UI built on shadcn/ui  
 
-Login / Register – Role selection & authentication
+---
 
-Student
-Dashboard, Tasks, Sessions, Sales, Leaderboard, Feedback, Reviews, Profile, Help
+## 🗄️ State & Data
 
-Mentor
-Dashboard, Batches, Earnings, Sessions, Leaderboard, Profile
+| Layer        | Library        | Purpose                     |
+|--------------|---------------|-----------------------------|
+| Local        | `useState`    | Simple component state      |
+| Server state | TanStack Query| Fetching, caching, syncing  |
+| URL params   | React Router  | Contextual page data        |
 
-Admin
-Dashboard, Batches, Students, Teachers, Earnings, Feedback, Profile
+---
 
-🧩 Components
-Layout Components
-MainLayout – Authenticated pages layout
+## 🌐 Expected API Endpoints
 
-Sidebar – Collapsible navigation with role switcher
+```
+Auth      POST /api/auth/login     POST /api/auth/register
+Students  CRUD /api/students             /{id}/tasks  /sales  /sessions
+Mentors   CRUD /api/mentors              /{id}/batches /earnings /sessions
+Admin     CRUD /api/admin/batches | students | teachers | earnings | feedback
+Common    /api/leaderboard   /api/tasks   /api/sessions
+```
 
-UI & Custom Components
-Built using shadcn/ui
+> Responses should mirror the shapes currently hard‑coded in mock data.
 
-UserAvatar, ProgressCard, TaskCard for dynamic UI rendering
+---
 
-🔄 State & Data Management
-Local State – React’s useState
+## 🛠️ Getting Started
 
-Server State – TanStack Query
-
-Routing Params – Used for dynamic page behavior
-
-🌐 API Integration (Expected)
-Module	Endpoint
-Auth	/api/auth/login, /api/auth/register
-Students	/api/students/{id}/tasks, /sales
-Mentors	/api/mentors/{id}/batches, /earnings
-Admin	/api/admin/batches, /students
-Common	/api/tasks, /leaderboard, /sessions
-
-All endpoints are expected to return data matching mock structures used in components.
-
-🧪 Testing Strategy
-Component Testing – Isolated shadcn/ui components
-
-Integration Testing – Role-based flows
-
-Mock Data – Used for all pages (replace with APIs on backend integration)
-
-🔐 Authentication & Access
-JWT Auth with role included in token
-
-Role-Based Middleware for protected routes
-
-Access Control to restrict page access by role
-
-📦 Setup Instructions
-# Clone the repo
-git clone https://github.com/your-org/oll-bootcamp-frontend.git
+```bash
+# 1. Clone
+git clone https://github.com/<your‑org>/oll-bootcamp-frontend.git
 cd oll-bootcamp-frontend
-# Install dependencies
+
+# 2. Install deps
 npm install
-# Start dev server
+
+# 3. Run dev server
 npm run dev
+```
 
+The app expects the backend API to be accessible at **`http://localhost:3000`** by default (configure in `src/lib/api.ts`).
 
-🤝 Contribution Guide
-Use consistent folder and naming conventions
+---
 
-Ensure components are reusable and role-agnostic if possible
+## 🧪 Tests
 
-Always write meaningful commit messages
+- Unit: Jest + React Testing Library for isolated components  
+- Integration: role‑based flows & TanStack Query hooks  
 
-Use prettier and eslint before pushing
+---
 
-📬 Contact
-For support or feature requests, please reach out to the OLL Dev Team or open an issue on GitHub.
+## 🤝 Contributing
+
+1. Create a feature branch  
+2. Commit with conventional messages (e.g., `feat: add session attendance`)  
+3. Create a PR against **main**  
+
+Run `npm run lint && npm run format` before pushing.
+
+---
+
+## 📄 License
+
+Distributed under the **MIT** license. See `LICENSE` for details.
